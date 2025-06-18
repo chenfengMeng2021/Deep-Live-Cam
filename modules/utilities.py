@@ -76,12 +76,11 @@ def get_temp_output_path(target_path: str) -> str:
     return os.path.join(temp_directory_path, TEMP_FILE)
 
 
-def normalize_output_path(source_path: str, target_path: str, output_path: str) -> Any:
-    if source_path and target_path:
+def normalize_output_path(source_path: str, target_path: str, output_path: str | None) -> Any:
+    if source_path and target_path and output_path and os.path.isdir(output_path):
         source_name, _ = os.path.splitext(os.path.basename(source_path))
         target_name, target_extension = os.path.splitext(os.path.basename(target_path))
-        if os.path.isdir(output_path):
-            return os.path.join(output_path, source_name + '-' + target_name + target_extension)
+        return os.path.join(output_path, source_name + '-' + target_name + target_extension)
     return output_path
 
 
